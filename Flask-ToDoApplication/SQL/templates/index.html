@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+
+<body>
+    <div id="myDIV" class="header">
+        <h2 style="margin:5px">My To Do List</h2>
+        <form action="{{ url_for('add') }}" method="POST">
+            <input type="text" id="myInput" name="task" placeholder="Title...">
+            <!-- <span onclick="newElement()" class="addBtn">Add</span> -->
+            <input type="submit" class="addBtn" value="Add">
+        </form>
+    </div>
+    <ul id="myUL">
+        {% for task in tasks %}
+            {% if tasks[task]['status'] == 'Completed' %}
+                <li class="checked"><a href="{{ url_for('done', t_id=tasks[task]['id']) }}">{{ tasks[task]["title"] }}</a><a href="{{ url_for('deletes', t_id=tasks[task]['id']) }}"> <span class="close">×</span></a></li>
+            {% else %}
+                <li><a href="{{ url_for('done', t_id=tasks[task]['id']) }}">{{ tasks[task]["title"] }}</a><a href="{{ url_for('deletes', t_id=tasks[task]['id']) }}"> <span class="close">×</span></a></li>
+            {% endif %}
+        {% endfor %}            
+    </ul>
+    <!-- <script src="{{ url_for('static', filename='js/app.js') }}"></script> -->
+</body>
+
+</html>
